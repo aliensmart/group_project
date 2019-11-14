@@ -64,13 +64,13 @@ def provider_login():
 @app.route("/<api_key>/userfiles", methods=['GET'])
 def get_files(api_key):
     user = User.api_authenticate(api_key)
-    files = user.get_files()
+    files = user.get_all_user_files()
     file_list = []
-    for file in files:
+    for user_file in files:
         data = {}
-        data["Blood Type"] = file.blood_type
-        data["Allergies"] = file.allergies
-        data["Medications"] = file.medications
+        data["Blood Type"] = user_file.blood_type
+        data["Allergies"] = user_file.allergies
+        data["Medications"] = user_file.medications
         file_list.append(data)
     return jsonify(file_list)
 
