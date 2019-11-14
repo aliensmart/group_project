@@ -1,4 +1,5 @@
 import React from 'react'
+import UserFile from './UserFile'
 
 const Home = ()=>{
     return(
@@ -12,7 +13,8 @@ const Home = ()=>{
               </div>
               <div className="content_bottom_files ">
                 <h1 className="content_bottom_header">files</h1>
-                <table className="files_tables">
+                <UserFile />
+                {/* <table className="files_tables">
                   <tbody className="files_tbody">
                     <tr className="files_row">
                       <td className="files_name">file name</td>
@@ -31,7 +33,7 @@ const Home = ()=>{
                     </tr>
         
                   </tbody>
-                </table>
+                </table> */}
               </div>
             </div>
     )
