@@ -22,7 +22,8 @@ def schema(dbpath=DBPATH):
                 security_question BLOB,
                 token VARCHAR,
                 api_key VARCHAR,
-                unic_id VARCHAR,
+                temp_token VARCHAR,
+                unic_id VARCHAR NOT NULL,
                 provider_pk INTEGER,
                 FOREIGN KEY(provider_pk) REFERENCES providers(pk)
             );"""
@@ -36,7 +37,6 @@ def schema(dbpath=DBPATH):
             blood_type VARCHAR,
             allergies VARCHAR,
             medications VARCHAR,
-            unic_id VARCHAR,
             user_pk INTEGER,
             FOREIGN KEY(user_pk) REFERENCES users(pk)
             ); """
@@ -52,6 +52,8 @@ def schema(dbpath=DBPATH):
             department VARCHAR,
             username VARCHAR (16),
             email VARCHAR,
+            unic_id VARCHAR NOT NULL,
+            temp_token VARCHAR,
             password_hash VARCHAR(128),
             token VARCHAR,
             api_key VARCHAR

@@ -21,3 +21,10 @@ def random_unic_id(length=8):
     hasher.update(seed)
     output = hasher.hexdigest()
     return output[:length]
+
+def temp_token(length=20):
+    seed = (str(random.random()) + str(random.random())).encode()
+    hasher = sha512()
+    hasher.update(seed)
+    output = hasher.hexdigest()
+    return output[:length]

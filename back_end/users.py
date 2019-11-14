@@ -9,7 +9,7 @@ class User(ORM):
     tablename = 'users'
     fields = ['username', 'first_name', 'last_name', 'password_hash', 
             'email', 'security_question', 'token', 
-            'api_key', 'provider_pk' ]
+            'api_key', 'provider_pk', 'temp_token', 'unic_id' ]
 
     def __init__(self, **kwargs):
         self.pk = kwargs.get('pk')
@@ -22,6 +22,8 @@ class User(ORM):
         self.token = kwargs.get('token')
         self.api_key = kwargs.get('api_key')
         self.provider_pk = kwargs.get('provider_pk')
+        self.temp_token = kwargs.get('temp_token')
+        self.unic_id = kwargs.get('unic_id')
     
     @classmethod
     def api_authenticate(cls, api_key):
@@ -42,6 +44,9 @@ class User(ORM):
     def get_all_user_files(self):
         return User_files.all_from_where_clause('WHERE user_pk=?',(self.pk,))
     
+    def get_id(self):
+        return self.unic_id
+        
     def get_one_user_file(self, user_files_pk):
         return User_files.one_from_where_clause('WHERE pk=?', (user_files_pk,))
 

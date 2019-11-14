@@ -11,6 +11,7 @@ CORS(app)
 @app.route("/api/user/create", methods=['POST'])
 def create_user_account():
     api_key = util.random_api_key()
+    unic_id = util.random_unic_id()
     data = request.get_json()
     user = User()
     user.username = data['username']
@@ -21,12 +22,14 @@ def create_user_account():
     user.last_name = data['last_name']
     user.email = data['email']
     user.api_key = api_key
+    user.unic_id = unic_id
     user.save()
     return jsonify({"api_key": user.api_key})
 
 @app.route("/api/provider/create", methods=['POST'])
 def create_provider_account():
     api_key = util.random_api_key()
+    unic_id = util.random_unic_id()
     data = request.get_json()
     provider = Provider()
     provider.username = data['username']
@@ -38,6 +41,7 @@ def create_provider_account():
     provider.department = data['department']
     provider.doctor_name = data['doctor_name']
     provider.email = data['email']
+    provider.unic_id = unic_id
     provider.save()
     return jsonify({"api_key": provider.api_key})
 
@@ -69,6 +73,18 @@ def get_files(api_key):
         data["Medications"] = file.medications
         file_list.append(data)
     return jsonify(file_list)
+
+@app.route("/<api_key>/user/id", methods=['GET'])
+def get_user_id(api_key):
+    user = User.api_authenticate(api_key)
+    id = user.get_id()
+    return jsonify({"user_id": id})
+
+@app.route("/<api_key>/provider/id", methods=['GET'])
+def get_provider_id(api_key):
+    provider = Provider.api_authenticate(api_key)
+    id = provider.get_id()
+    return jsonify({"user_id": id})
 
 @app.route("/<api_key>/add_file", methods=['POST'])
 def add_file(api_key):

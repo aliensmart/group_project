@@ -6,7 +6,7 @@ import util
 class Provider(ORM):
     tablename = 'providers'
     fields = ['hospital', 'doctor_name', 'department', 'username',
-                'email', 'password_hash', 'token', 'api_key']
+                'email', 'password_hash', 'token', 'api_key', 'unic_id', 'temp_token']
 
     def __init__(self, **kwargs):
         self.pk = kwargs.get('pk')
@@ -18,6 +18,8 @@ class Provider(ORM):
         self.password_hash = kwargs.get('password_hash')
         self.token = kwargs.get('token')
         self.api_key = kwargs.get('api_key')
+        self.temp_token = kwargs.get('temp_token')
+        self.unic_id = kwargs.get('unic_id')
     
     @classmethod
     def api_authenticate(cls, api_key):
@@ -31,6 +33,9 @@ class Provider(ORM):
     def login(cls, username, password):
         return Provider.one_from_where_clause("WHERE username=? AND password_hash=?", 
                                                 (username, util.hash_password(password)))
+    
+    def get_id(self):
+        return self.unic_id
 
     def set_password(self, password):
         self.password_hash = util.hash_password(password)
