@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
 import UserHome from './components/LoggedView/User/UserHomePage'
-import MainMenu from './components/MainSideBare'
-import ProviderHome from './components/LoggedView/Provider/ProviderHomePage'
 import Router from './components/NotLoggedView/Router'
 import ProviderRoute from './components/LoggedView/Provider/Routers'
 

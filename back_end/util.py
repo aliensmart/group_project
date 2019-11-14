@@ -14,3 +14,10 @@ def random_api_key(length=15):
     hasher.update(seed)
     output = hasher.hexdigest()
     return output[:length]
+
+def random_unic_id(length=8):
+    seed = (str(random.random()) + str(random.random())).encode()
+    hasher = sha512()
+    hasher.update(seed)
+    output = hasher.hexdigest()
+    return output[:length]
