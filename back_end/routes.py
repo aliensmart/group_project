@@ -68,7 +68,7 @@ def get_files(api_key):
     file_list = []
     for user_file in files:
         data = {}
-        data["Blood Type"] = user_file.blood_type
+        data["Blood"] = user_file.blood_type
         data["Allergies"] = user_file.allergies
         data["Medications"] = user_file.medications
         file_list.append(data)

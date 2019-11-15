@@ -40,10 +40,28 @@ class Provider(ORM):
     def set_password(self, password):
         self.password_hash = util.hash_password(password)
 
+    def get_user_token(self, provider_id):
+        with sqlite3.connect('flaskchain.db') as conn:
+            cur = conn.cursor()
+            SQL = "SELECT token FROM chain WHERE unic_id=?"
+            cur.execute(SQL, (unic_id,))
+            token = cur.fetchone()
+            return token[0]
+
      # TODO
     def get_patient( self, first_name, last_name,):
-        pass
+        with sqlite3.connect('medical.db') as conn:
+                cur = conn.cursor()
+                SQL = "SELECT * FROM users JOIN user_files ON users.pk = user_files.pk "
+                cur.execute(SQL)
+                user_info = cur.fetchall()
+                return user_info
 
     # TODO
-    def get_patient_file(self, token):
-        pass
+    def get_patient_names(self, unic_id):
+        with sqlite3.connect('medical.db') as conn:
+                cur = conn.cursor()
+                SQL = "SELECT first_name, last_name FROM users where unic_id=?"
+                cur.execute(SQL, (unic_id,))
+                user_info = cur.fetchall()
+                return user_info

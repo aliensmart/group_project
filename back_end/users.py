@@ -2,6 +2,7 @@ from orm import ORM
 import random, string
 from user_files import User_files
 import util
+import sqlite3
 
 ORM.dbpath = 'medical.db'
 
@@ -61,4 +62,10 @@ class User(ORM):
         user_file.delete()
         user_file.save()
         
-
+    def send_token(self):
+        with sqlite3.connect('flaskchain.db') as conn:
+            cur = conn.cursor()
+            SQL = "INSERT INTO chain (user_token) VALUES (?);"
+            cur.execute(SQL, (self.token))
+        
+    
