@@ -1,5 +1,6 @@
 from orm import ORM
 import util
+import sqlite3
 
 
 
@@ -49,7 +50,7 @@ class Provider(ORM):
             return token[0]
 
      # TODO
-    def get_patient( self, first_name, last_name,):
+    def get_patient_info( self, first_name, last_name,):
         with sqlite3.connect('medical.db') as conn:
                 cur = conn.cursor()
                 SQL = "SELECT * FROM users JOIN user_files ON users.pk = user_files.pk "
@@ -65,3 +66,6 @@ class Provider(ORM):
                 cur.execute(SQL, (unic_id,))
                 user_info = cur.fetchall()
                 return user_info
+
+
+    

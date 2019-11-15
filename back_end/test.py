@@ -14,6 +14,6 @@ def get_patient_names():
                 SQL = "SELECT first_name, last_name FROM users where unic_id='1c228a7d'"
                 cur.execute(SQL)
                 user_info = cur.fetchall()
-                return user_info
+                print(user_info[0][0], user_info[0][1])
 
-print(get_patient_names())
+get_patient_names()
