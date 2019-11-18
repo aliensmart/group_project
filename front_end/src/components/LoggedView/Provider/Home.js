@@ -2,9 +2,8 @@ import React from 'react'
 import {NavLink} from 'react-router-dom'
 
 
-const Home = ()=>{
+const Home = (props)=>{
 
- 
     return(
         <div className="content_bottom_body">
               <div className="content_bottom_notification smb">
@@ -19,21 +18,10 @@ const Home = ()=>{
                 <table className="files_tables">
                   <tbody className="files_tbody">
                     <tr className="files_row">
-                      <td className="files_name">Patient1 name</td>
+                      <td className="files_name">{props.name}</td>
                       <td><a href="#" className="btn_file">Share</a></td>
                       <td><NavLink className="btn_file" to='/userfile'>Open</NavLink></td>
                     </tr>
-                    <tr className="files_row">
-                      <td className="files_name">Patient 2 name</td>
-                      <td><a href="#" className="btn_file">Share</a></td>
-                      <td><NavLink className="btn_file" to='/userfile'>Open</NavLink></td>
-                    </tr>
-                    <tr className="files_row">
-                      <td className="files_name">Patient 3 name</td>
-                      <td><a href="#" className="btn_file">Share</a></td>
-                      <td><NavLink className="btn_file" to='/userfile'>Open</NavLink></td>
-                    </tr>
-        
                   </tbody>
                 </table>
               </div>

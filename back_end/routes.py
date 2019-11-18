@@ -103,11 +103,11 @@ def remove_file(api_key):
 def get_user_name(api_key):
     data = request.get_json()
     unic_id = data["user_id"]
+    provider_id = data["provider_id"]
     provider = Provider.api_authenticate(api_key)
     patient_names = provider.get_patient_names(unic_id)
     print(patient_names)
     name = patient_names[0][0] + " " + patient_names[0][1]
-    print(name)
     return jsonify({"name":name})
 
 # @app.route("/<api_key>/provider/get_names")
