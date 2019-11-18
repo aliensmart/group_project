@@ -22,7 +22,7 @@ const ProviderLogin = ()=>{
   }, [value]);
   let timeReload = (timeTo)=>{
     // 
-    setTimeout((function(){window.location="http://localhost:3001/"}),timeTo)}
+    setTimeout((function(){window.location="http://localhost:3000/"}),timeTo)}
     const getToken = () => {
       const sendData = async () => {
           setIsAuthenticating(true);
