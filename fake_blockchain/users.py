@@ -68,9 +68,4 @@ class User(ORM):
             SQL = "INSERT INTO chain (user_token, provider_id) VALUES (?.?);"
             cur.execute(SQL, (self.token, provider_id))
 
-<<<<<<< HEAD
-=======
-    
-        
->>>>>>> 3a18bdbc563f7fb3d044c3ba4322e3440e1559e6
     

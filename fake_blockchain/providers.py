@@ -1,5 +1,4 @@
 from orm import ORM
-from users import User
 import util
 import sqlite3
 
@@ -44,12 +43,10 @@ class Provider(ORM):
 
     def write_token_to_chain(self, user_id, provider_id):
         user = User.one_from_where_clause('WHERE unic_id=?', (user_id,))
-        provider = Provider.one_from_where_clause('WHERE unic_id=?', (provider_id,))
-        print(provider)
+        provider = Provider.one_from_where_clause('WHERE unic_is=?', (provider_id))
         if user and provider:
             # TODO: generate single-use token here
             token = user.temp_token
-            print(token)
             # TODO: encrypt token w/ providers public key
             with sqlite3.connect('flaskchain.db') as conn:
                 cur = conn.cursor()
@@ -62,10 +59,9 @@ class Provider(ORM):
     def get_user_token(self, unic_id):
         with sqlite3.connect('flaskchain.db') as conn:
             cur = conn.cursor()
-            SQL = "SELECT user_token FROM chain WHERE provider_id=?"
+            SQL = "SELECT token FROM chain WHERE unic_id=?"
             cur.execute(SQL, (unic_id,))
             token = cur.fetchone()
-            # TODO: decrypt token
             return token[0]
 
      # TODO
@@ -73,7 +69,7 @@ class Provider(ORM):
         with sqlite3.connect('medical.db') as conn:
                 cur = conn.cursor()
                 SQL = "SELECT * FROM users JOIN user_files ON users.pk = user_files.pk WHERE unic_id=?"
-                cur.execute(SQL, (unic_id,))
+                cur.execute(SQL)
                 user_info = cur.fetchall()
                 return user_info
 
