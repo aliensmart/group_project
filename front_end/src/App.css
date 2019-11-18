@@ -9,7 +9,9 @@ body{
 html{
   font-size: 62.5%;
 }
-
+.id{
+  font-size: 2rem;
+}
 .App {
   text-align: center;
 }
@@ -40,7 +42,7 @@ html{
 
 }
 .sideBar{
-  background: #2e2e2ee0;
+  background: #d8c3c378;
   flex-basis: 20%;
   height: 100vh;
   padding: 20px 0px;
@@ -70,6 +72,7 @@ html{
 
 .searchInput{
   padding: 2rem;
+  padding-right: 5rem;
   width: 30rem;
   font-size: 1.5rem;
 
@@ -83,7 +86,7 @@ html{
 }
 
 .logo{
-  width: 25%;
+  width: 40%;
 }
 
 .content_bottom{
@@ -125,12 +128,12 @@ html{
 }
 
 .content_bottom_important{
-  background: lightsalmon;
+  background: #016CC1;
   padding: 1rem;
   min-height: 15rem;
 }
 .content_bottom_notification{
-  background: lightsalmon;
+  background: #016CC1;
   padding: 1rem;
   min-height: 15rem;
 }
@@ -145,7 +148,7 @@ html{
 }
 
 .content_bottom_files{
-  background: lightsalmon;
+  background: #016CC1;
   padding: 1rem;
   min-height: 15rem;
 }
@@ -188,7 +191,9 @@ html{
   width: 100%;
   /* background: khaki; */
   margin-bottom: 1rem;
-  padding: 1rem;
+  padding: 2rem;
+  transition: .4s;
+  background: #DA3570;
 }
 
 .nav_item_content{
@@ -199,4 +204,14 @@ html{
   /* background: darkgreen; */
   padding: 8px 16px;
   margin-bottom: 3rem;
+}
+.nav_item:hover{
+
+  background: rgba(218, 53, 111, 0.774);
+}
+
+.content_bottom_header,
+.files_tables td,
+.files_tables th{
+  color: #ffffff;
 }

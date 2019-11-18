@@ -2,9 +2,8 @@ import React from 'react'
 import {NavLink} from 'react-router-dom'
 
 
-const Home = ()=>{
+const Home = (props)=>{
 
- 
     return(
         <div className="content_bottom_body">
               <div className="content_bottom_notification smb">
@@ -17,23 +16,21 @@ const Home = ()=>{
               <div className="content_bottom_files ">
                 <h1 className="content_bottom_header">Patients</h1>
                 <table className="files_tables">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Blood Type</th>
+                      <th>Allergy</th>
+                      <th>Medication</th>
+                    </tr>
+                  </thead>
                   <tbody className="files_tbody">
                     <tr className="files_row">
-                      <td className="files_name">Patient1 name</td>
-                      <td><a href="#" className="btn_file">Share</a></td>
-                      <td><NavLink className="btn_file" to='/userfile'>Open</NavLink></td>
+                      <td className="files_name">{props.name}</td>
+                      <td>{props.blood}</td>
+                      <td>{props.allergy}</td>
+                      <td>{props.medication}</td>
                     </tr>
-                    <tr className="files_row">
-                      <td className="files_name">Patient 2 name</td>
-                      <td><a href="#" className="btn_file">Share</a></td>
-                      <td><NavLink className="btn_file" to='/userfile'>Open</NavLink></td>
-                    </tr>
-                    <tr className="files_row">
-                      <td className="files_name">Patient 3 name</td>
-                      <td><a href="#" className="btn_file">Share</a></td>
-                      <td><NavLink className="btn_file" to='/userfile'>Open</NavLink></td>
-                    </tr>
-        
                   </tbody>
                 </table>
               </div>

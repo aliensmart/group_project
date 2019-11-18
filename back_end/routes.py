@@ -109,14 +109,25 @@ def get_user_name(api_key):
     name = patient_names[0][0] + " " + patient_names[0][1]
     return jsonify({"name":name})
 
-@app.route("/<api_key>/provider/user_names", methods=['POST'])
-def get_user_files(unic_id):
+@app.route("/<api_key>/provider/user_files", methods=['POST'])
+def get_user_files(api_key):
     data = request.get_json()
+    print(data)
     unic_id = data["user_id"]
     provider_id = data["provider_id"]
     provider = Provider.api_authenticate(api_key)
     patient_info = provider.get_patient_info(unic_id)
-    return jsonify(patient_info)
+    name = patient_info[0][2] + " " + patient_info[0][3]
+    Blood = patient_info[0][13]
+    allergy = patient_info[0][14]
+    medication = patient_info[0][15]
+    patient_info = {
+        "name": name,
+        "blood":Blood,
+        "allergy":allergy,
+        "medication": medication
+    }
+    return jsonify({"info":patient_info})
 
 
 if __name__ == "__main__":
