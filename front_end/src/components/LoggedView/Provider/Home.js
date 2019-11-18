@@ -16,11 +16,20 @@ const Home = (props)=>{
               <div className="content_bottom_files ">
                 <h1 className="content_bottom_header">Patients</h1>
                 <table className="files_tables">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Blood Type</th>
+                      <th>Allergy</th>
+                      <th>Medication</th>
+                    </tr>
+                  </thead>
                   <tbody className="files_tbody">
                     <tr className="files_row">
                       <td className="files_name">{props.name}</td>
-                      <td><a href="#" className="btn_file">Share</a></td>
-                      <td><NavLink className="btn_file" to='/userfile'>Open</NavLink></td>
+                      <td>{props.blood}</td>
+                      <td>{props.allergy}</td>
+                      <td>{props.medication}</td>
                     </tr>
                   </tbody>
                 </table>

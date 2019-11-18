@@ -10,6 +10,9 @@ import axios from 'axios'
 const UserHomePage = ()=>{
     const token = sessionStorage.getItem("tokenProvider")
     const [name, setName]= useState('')
+    const [blood, setBlood]= useState('')
+    const [allergy, setAllergy]= useState('')
+    const [medication, setMedication]= useState('')
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthError, setIsAuthError] = useState(false);
@@ -28,15 +31,19 @@ const UserHomePage = ()=>{
         setIsError(false);
         setIsAuthError(false)
         try{
-          const endpoint = `http://localhost:5000/${token}/provider/user_names`
+          const endpoint = `http://localhost:5000/${token}/provider/user_files`
           const data = {
             user_id : inputUserId,
             provider_id : inputProciderId
           }
           const res = await axios.post(endpoint, data)
           console.log(res.data)
-          if(res.data.name){
-            setName(res.data.name)
+          if(res.data.info){
+            setName(res.data.info.name)
+            setBlood(res.data.info.blood)
+            setMedication(res.data.info.medication)
+            setAllergy(res.data.info.allergy)
+
             // javascript:timeReload(500)
           }else{
             setIsAuthError(true)
@@ -86,7 +93,10 @@ const UserHomePage = ()=>{
       <div className="content_bottom">
             
           <UserHome
-          name = {name}/>
+          name = {name}
+          blood = {blood}
+          medication={medication}
+          allergy = {allergy}/>
           <RightSidebare
           onclick = {e=>showInput()}/>
           

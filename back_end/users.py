@@ -68,8 +68,6 @@ class User(ORM):
             SQL = "INSERT INTO chain (user_token, provider_id) VALUES (?.?);"
             cur.execute(SQL, (self.token, provider_id))
 
-    def get_api_by_unic_id(self, unic_id):
-        patient = User.one_from_where_clause('WHERE unic_id=?')
-        patient.
+    
         
     
