@@ -68,10 +68,10 @@ const UserHomePage = ()=>{
     let content = null
     if(show){
         content=(
-            <form>
-                <input type="text" placeholder="Patient Id" onChange={e=>setInputUserId(e.target.value)}/>
-                <input type="text" placeholder="Your Id" onChange={e=>setInputProviderId(e.target.value)}/>
-                <input type="button" value="Send Request" onClick={e=>{getName(); e.preventDefault()}}/>
+            <form className="queryForm">
+                <input type="text" placeholder="Patient Id" onChange={e=>setInputUserId(e.target.value)} className="queryForm_input"/>
+                <input type="text" placeholder="Your Id" onChange={e=>setInputProviderId(e.target.value)} className="queryForm_input"/>
+                <input type="button" value="Send Request" onClick={e=>{getName(); e.preventDefault()}} className="queryForm_input"/>
                 
             </form>
         )

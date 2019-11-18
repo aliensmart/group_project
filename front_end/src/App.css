@@ -99,13 +99,7 @@ html{
   flex-basis: 89%;
 }
 .content_bottom_sidebare{
-  flex-basis: 10%;
-  /* background:darkgray; */
-  /* display: flex;
-  /* flex-flow: column nowrap;
-  justify-content: space-around; */
-  /* text-align: right; */
-  
+  flex-basis: 10%
 }
 .btn{
   padding: 1rem;
@@ -214,4 +208,44 @@ html{
 .files_tables td,
 .files_tables th{
   color: #ffffff;
+}
+
+.queryForm{
+  display: flex;
+  flex-direction: column;
+  width: 40rem;
+  justify-content: space-around;
+  margin: 2rem auto;
+  transition: .5s;
+}
+
+.queryForm_input{
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.queryForm_input:focus{
+  outline: none;
+}
+
+.queryForm input[type="text"]{
+  border: 2px solid #016CC1;
+  border-radius: 5px;
+  font-size: 1.8rem;
+}
+
+.queryForm input[type="button"]{
+  background: #016CC1;
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  transition: .5s;
+}
+
+.queryForm input[type="button"]:hover{
+  background: #DA3570;
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
