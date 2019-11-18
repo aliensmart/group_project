@@ -53,7 +53,7 @@ class Provider(ORM):
     def get_patient_info( self, unic_id):
         with sqlite3.connect('medical.db') as conn:
                 cur = conn.cursor()
-                SQL = "SELECT * FROM users JOIN user_files ON users.pk = user_files.pk "
+                SQL = "SELECT * FROM users JOIN user_files ON users.pk = user_files.pk WHERE unic_id=?"
                 cur.execute(SQL)
                 user_info = cur.fetchall()
                 return user_info
@@ -67,5 +67,6 @@ class Provider(ORM):
                 user_info = cur.fetchall()
                 return user_info
 
+    
 
     
