@@ -8,6 +8,7 @@ const Home = (props)=>{
         <div className="content_bottom_body">
               <div className="content_bottom_notification smb">
                 <h1 className="content_bottom_header">Notification</h1>
+                <p>{props.chainToken}</p>
                 
               </div>
               <div className="content_bottom_important smb">

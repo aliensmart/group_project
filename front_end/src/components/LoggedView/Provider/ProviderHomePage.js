@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import UserHome from './Home'
 import RightSidebare from './RightSidebare'
 import profile from '../../../images/clair.png'
@@ -9,7 +9,7 @@ import axios from 'axios'
 
 const UserHomePage = ()=>{
     const token = sessionStorage.getItem("tokenProvider")
-    const [name, setName]= useState('')
+    const [data, setData]= useState('')
     const [blood, setBlood]= useState('')
     const [allergy, setAllergy]= useState('')
     const [medication, setMedication]= useState('')
@@ -24,30 +24,25 @@ const UserHomePage = ()=>{
     let timeReload = timeT0=>{
       setTimeout(()=>{window.location="http://localhost:3000/"}, timeT0)
     }
+   
 
-    const getName = ()=>{
+    const sendQuery = ()=>{
       const sendData = async () => {
         setIsAuthenticating(true);
         setIsError(false);
         setIsAuthError(false)
         try{
-          const endpoint = `http://localhost:5000/${token}/provider/user_files`
+          const endpoint = `http://localhost:5001/${token}/send_token`
           const data = {
             user_id : inputUserId,
             provider_id : inputProciderId
           }
           const res = await axios.post(endpoint, data)
           console.log(res.data)
-          if(res.data.info){
-            setName(res.data.info.name)
-            setBlood(res.data.info.blood)
-            setMedication(res.data.info.medication)
-            setAllergy(res.data.info.allergy)
-
-            // javascript:timeReload(500)
-          }else{
-            setIsAuthError(true)
+          if(res.data){
+              javascript:timeReload(5000)
           }
+          
         }catch(error){
           console.log(error)
           setIsError(true)
@@ -65,13 +60,31 @@ const UserHomePage = ()=>{
         
     }
 
+    const fetchData = async ()=>{
+        setIsLoading(true);
+        try{
+            const res = await axios(`http://localhost:5001/${token}/get_token`)
+            setData(res.data.Patient_Token);
+        }catch (error){
+            console.log(error)
+        }
+        setIsLoading(false)
+    };
+
+
+    useEffect(()=>{
+        
+        fetchData();
+    }, [])
+    // const getToken = 
+
     let content = null
     if(show){
         content=(
             <form className="queryForm">
                 <input type="text" placeholder="Patient Id" onChange={e=>setInputUserId(e.target.value)} className="queryForm_input"/>
                 <input type="text" placeholder="Your Id" onChange={e=>setInputProviderId(e.target.value)} className="queryForm_input"/>
-                <input type="button" value="Send Request" onClick={e=>{getName(); e.preventDefault()}} className="queryForm_input"/>
+                <input type="button" value="Send Request" onClick={e=>{sendQuery(); e.preventDefault()}} className="queryForm_input"/>
                 
             </form>
         )
@@ -93,10 +106,7 @@ const UserHomePage = ()=>{
       <div className="content_bottom">
             
           <UserHome
-          name = {name}
-          blood = {blood}
-          medication={medication}
-          allergy = {allergy}/>
+          chainToken = {data}/>
           <RightSidebare
           onclick = {e=>showInput()}/>
           
