@@ -62,10 +62,13 @@ class User(ORM):
         user_file.delete()
         user_file.save()
         
-    def send_token(self):
+    def send_token(self, provider_id):
         with sqlite3.connect('flaskchain.db') as conn:
             cur = conn.cursor()
-            SQL = "INSERT INTO chain (user_token) VALUES (?);"
-            cur.execute(SQL, (self.token))
+            SQL = "INSERT INTO chain (user_token, provider_id) VALUES (?.?);"
+            cur.execute(SQL, (self.token, provider_id))
+
+    def get_api_by_unic_id(self, unic_id):
+        return User.one_from_where_clause('WHERE unic_id=?')
         
     

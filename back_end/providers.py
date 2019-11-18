@@ -50,7 +50,7 @@ class Provider(ORM):
             return token[0]
 
      # TODO
-    def get_patient_info( self, first_name, last_name,):
+    def get_patient_info( self, unic_id):
         with sqlite3.connect('medical.db') as conn:
                 cur = conn.cursor()
                 SQL = "SELECT * FROM users JOIN user_files ON users.pk = user_files.pk "
@@ -62,7 +62,7 @@ class Provider(ORM):
     def get_patient_names(self, unic_id):
         with sqlite3.connect('medical.db') as conn:
                 cur = conn.cursor()
-                SQL = "SELECT first_name, last_name FROM users where unic_id=?"
+                SQL = "SELECT first_name, last_name FROM users WHERE unic_id=?"
                 cur.execute(SQL, (unic_id,))
                 user_info = cur.fetchall()
                 return user_info

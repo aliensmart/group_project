@@ -5,7 +5,7 @@ const MainMenu = ()=>{
 
   let timeReload = (timeTo)=>{
     // 
-    setTimeout((function(){window.location="http://localhost:3001/"}),timeTo)}
+    setTimeout((function(){window.location="http://localhost:3000/"}),timeTo)}
     return(
         <div className="sideBar">
         <div>
