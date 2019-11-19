@@ -68,15 +68,15 @@ let timeReload = (timeTo)=>{
 let contents = null;
 if(!value){
   contents=(
-    <div>
-    <form>
+    <div className="Log_main">
+    <form className="Log_form">
 
 <h3>User Sign up</h3>  
 <label for="firstN">First Name</label>
-<input type="text" placeholder="firstN" id="firstN" onChange={e=>setInputFirstName(e.target.value)}/>
+<input type="text" placeholder="first Name" id="firstN" onChange={e=>setInputFirstName(e.target.value)}/>
 
 <label for="lastN">Last Name</label>
-<input type="text" placeholder="lastN" id="lastN" onChange={e=>setInputLastName(e.target.value)}/>
+<input type="text" placeholder="last Name" id="lastN" onChange={e=>setInputLastName(e.target.value)}/>
 
 <label for="username">Username</label>
 <input type="text" placeholder="username" id="username" onChange={e=>setInputUsername(e.target.value)}/>
@@ -88,9 +88,11 @@ if(!value){
 <input type="password" placeholder="password" id="password" onChange={e=>setInputPassword(e.target.value)}/>
 
 <input type="button" value="Sign-up" onClick={e=>{getToken(); e.preventDefault()}}/>
-</form>
+
 <a href="/user">have an account?</a>
 <a href="/provider">Go to Provider</a>
+</form>
+
 </div>
   )
 }

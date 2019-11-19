@@ -70,8 +70,8 @@ let timeReload = (timeTo)=>{
 let contents = null;
 if(!value){
   contents = (
-    <div>
-      <form>
+    <div className="Log_main">
+      <form className="Log_form">
 
 <h3>Provider Sign up</h3>
 
@@ -94,9 +94,10 @@ if(!value){
 <input type="password" placeholder="password" id="password" onChange={e=>setInputPassword(e.target.value)}/>
 
 <input type="button" value="Sign-up" onClick={e=>{getToken(); e.preventDefault()}}/>
-</form>
 <a href="/provider">have an account?</a>
 <a href="/user">Go to User</a>
+</form>
+
     </div>
   )
 }

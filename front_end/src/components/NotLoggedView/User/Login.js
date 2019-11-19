@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
+import '../Log_sign.css'
 
 const UserLogin = ()=>{
   const useStateWithSessionStorage = sessionStorageKey=>{
@@ -53,17 +54,17 @@ const UserLogin = ()=>{
   let contents = null;
   if (!value){
     contents = (
-      <div>
-        <form>
+      <div className="Log_main">
+        <form className="Log_form">
         <h3>User Login</h3>
         <label for="username">Username</label>
         <input type="text" placeholder="username" id="username" onChange={e=>setInputUser(e.target.value)}/>
         <label for="password">Password</label>
         <input type="password" placeholder="password" id="password" onChange={e=>setInputPass(e.target.value)}/>
         <input type="button" value="login" onClick={e=>{getToken(); e.preventDefault()}}/>
+        <a href="/user/signup">Don't have an account?</a>
+        <a href="/provider">Go to Provider</a>
       </form>
-      <a href="/user/signup">Don't have an account?</a>
-      <a href="/provider">Go to Provider</a>
       </div>
     )
   }

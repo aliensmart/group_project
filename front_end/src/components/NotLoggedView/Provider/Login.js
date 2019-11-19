@@ -54,8 +54,8 @@ const ProviderLogin = ()=>{
   let contents = null;
   if (!value){
     contents=(
-      <div>
-          <form>
+      <div className="Log_main">
+          <form className="Log_form">
 
             <h3>Provider Login</h3>
 
@@ -64,9 +64,11 @@ const ProviderLogin = ()=>{
                 <label for="password">Password</label>
                 <input type="password" placeholder="password" id="password" onChange={e=>setInputPass(e.target.value)}/>
                 <input type="button" value="login" onClick={e=>{getToken(); e.preventDefault()}}/>
+
+                <a href="/provider/signup">Don't have an account?</a>
+                <a href="/user">Go to user</a>
             </form>
-            <a href="/provider/signup">Don't have an account?</a>
-            <a href="/user">Go to user</a>
+            
       </div>
     )
   }
