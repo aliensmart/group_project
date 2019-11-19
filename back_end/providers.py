@@ -49,12 +49,13 @@ class Provider(ORM):
         if user and provider:
             # TODO: generate single-use token here -- DONE
             user.temp_token = util.temp_token()
-            token = user.temp_token
+            user.save()
+            temp_token = user.temp_token
             # TODO: encrypt token w/ providers public key
             with sqlite3.connect('flaskchain.db') as conn:
                 cur = conn.cursor()
                 SQL = "INSERT INTO chain (user_token, provider_id) VALUES(?,?)"
-                cur.execute(SQL, (token, provider_id))
+                cur.execute(SQL, (temp_token, provider_id))
         else:
             "Patient and/or Provider don't exist"
             
@@ -89,7 +90,7 @@ class Provider(ORM):
     def get_patient_info_from_token(self, token):
         with sqlite3.connect('medical.db') as conn:
             cur = conn.cursor()
-            SQL =  "SELECT * FROM users JOIN user_files ON users.pk = user_files.pk WHERE temp_token=?"
+            SQL =  "SELECT * FROM users JOIN user_files ON users.pk=user_files.pk WHERE temp_token=?"
             cur.execute(SQL, (token,))
             data = cur.fetchall()
             return data

@@ -8,7 +8,7 @@ DBPATH = os.path.join(DIR, DBFILENAME)
 def schema(dbpath=DBPATH):
     with sqlite3.connect(dbpath) as conn:
         cur = conn.cursor()
-        DROPSQL = "DROP TABLE IF EXISTS {tablename};"
+        DROPSQL = "DROP TABLE IF EXISTS chain;"
 
         cur.execute(DROPSQL.format(tablename="chain"))
 

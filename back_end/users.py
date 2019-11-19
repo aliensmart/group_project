@@ -66,5 +66,5 @@ class User(ORM):
         with sqlite3.connect('flaskchain.db') as conn:
             cur = conn.cursor()
             SQL = "INSERT INTO chain (user_token, provider_id) VALUES (?.?);"
-            cur.execute(SQL, (self.token, provider_id))
+            cur.execute(SQL, (self.temp_token, provider_id))
     

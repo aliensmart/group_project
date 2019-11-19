@@ -67,6 +67,7 @@ const UserHomePage = ()=>{
         try{
             const res = await axios(`http://localhost:5001/${token}/get_token`)
             setData(res.data.Patient_Token);
+            console.log(data)
         }catch (error){
             console.log(error)
         }
