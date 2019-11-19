@@ -5,24 +5,15 @@ from user_files import User_files
 from orm import ORM
 import util
 
-ORM.dbpath = 'medical.db'
+ORM.dbpath = 'medical.db' 
+
+def get_patient_info_from_token(self, token):
+        with sqlite3.connect('medical.db') as conn:
+            cur = conn.cursor()
+            SQL =  "SELECT * FROM users JOIN user_files ON users.pk = user_files.pk WHERE temp_token=?"
+            cur.execute(SQL, (token,))
+            data = cur.fetchall()
+            return data
 
 
-def write_token_to_chain(self, user_id, provider_id):
-        user = User.one_from_where_clause('WHERE unic_id=?', (user_id,))
-        provider = Provider.one_from_where_clause('WHERE unic_id=?', (provider_id))
-        print(provider)
-        if user and provider:
-            # TODO: generate single-use token here
-            token = user.temp_token
-            print(token)
-            # TODO: encrypt token w/ providers public key
-            with sqlite3.connect('flaskchain.db') as conn:
-                cur = conn.cursor()
-                SQL = "INSERT INTO chain (user_token, provider_id) VALUES(?,?)"
-                cur.execute(SQL, (token, provider_id))
-        else:
-            "Patient and/or Provider don't exist"
-
-
-print(write_token_to_chain("1c228a7d", "29181163"))
+print(get_patient_info_from_token("ThisIsATempToken"))

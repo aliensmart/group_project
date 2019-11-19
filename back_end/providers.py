@@ -47,9 +47,9 @@ class Provider(ORM):
         provider = Provider.one_from_where_clause('WHERE unic_id=?', (provider_id,))
         print(provider)
         if user and provider:
-            # TODO: generate single-use token here
+            # TODO: generate single-use token here -- DONE
+            user.temp_token = util.temp_token()
             token = user.temp_token
-            print(token)
             # TODO: encrypt token w/ providers public key
             with sqlite3.connect('flaskchain.db') as conn:
                 cur = conn.cursor()
@@ -86,6 +86,10 @@ class Provider(ORM):
                 user_info = cur.fetchall()
                 return user_info
 
-    
-
-    
+    def get_patient_info_from_token(self, token):
+        with sqlite3.connect('medical.db') as conn:
+            cur = conn.cursor()
+            SQL =  "SELECT * FROM users JOIN user_files ON users.pk = user_files.pk WHERE temp_token=?"
+            cur.execute(SQL, (token,))
+            data = cur.fetchall()
+            return data

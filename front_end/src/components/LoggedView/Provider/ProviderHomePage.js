@@ -8,11 +8,13 @@ import axios from 'axios'
 
 
 const UserHomePage = ()=>{
-    const token = sessionStorage.getItem("tokenProvider")
-    const [data, setData]= useState('')
-    const [blood, setBlood]= useState('')
-    const [allergy, setAllergy]= useState('')
-    const [medication, setMedication]= useState('')
+    const token = sessionStorage.getItem("tokenProvider");
+    const [data, setData]= useState('');
+    const [patientData, setPatientData] = useState('');
+    const [inputUserToken, setInputUserToken] = useState('');
+    const [blood, setBlood]= useState('');
+    const [allergy, setAllergy]= useState('');
+    const [medication, setMedication]= useState('');
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthError, setIsAuthError] = useState(false);
@@ -71,12 +73,36 @@ const UserHomePage = ()=>{
         setIsLoading(false)
     };
 
-
     useEffect(()=>{
         
-        fetchData();
+      fetchData();
     }, [])
     // const getToken = 
+
+
+    const sendToken = ()=>{
+      const sendData = async () => {
+        setIsAuthenticating(true);
+        setIsError(false);
+        setIsAuthError(false)
+        try{
+          const endpoint = `http://localhost:5000/${token}/provider/user_files`
+          const data = {
+            temp_token : inputUserToken
+          }
+          const res = await axios.post(endpoint, data)
+          setPatientData(res.data)
+          console.log(res.data)
+        }catch(error){
+          console.log(error)
+          setIsError(true)
+        }
+        setIsAuthenticating(false)
+      }
+      sendData();
+    }
+    
+    console.log(patientData)
 
     let content = null
     if(show){
@@ -86,6 +112,16 @@ const UserHomePage = ()=>{
                 <input type="text" placeholder="Your Id" onChange={e=>setInputProviderId(e.target.value)} className="queryForm_input"/>
                 <input type="button" value="Send Request" onClick={e=>{sendQuery(); e.preventDefault()}} className="queryForm_input"/>
                 
+            </form>
+        )
+    }
+
+    let contents = null
+    if(show){
+        contents=(
+            <form className="queryForm">
+                <input type="text" placeholder="Patient Token" onChange={e=>setInputUserToken(e.target.value)} className="queryForm_input"/>
+                <input type="button" value="Get Patient File" onClick={e=>{sendToken(); e.preventDefault()}} className="queryForm_input"/>
             </form>
         )
     }
@@ -106,13 +142,14 @@ const UserHomePage = ()=>{
       <div className="content_bottom">
             
           <UserHome
-          chainToken = {data}/>
+          chainToken = {data} blood={patientData.blood} name ={patientData.name} allergy={patientData.allergy} medication={patientData.medication}/>
           <RightSidebare
           onclick = {e=>showInput()}/>
           
           
       </div>
       {content}
+      {contents}
     </div>
     </div>
     )
