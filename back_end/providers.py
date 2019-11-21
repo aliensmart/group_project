@@ -2,13 +2,15 @@ from orm import ORM
 from users import User
 import util
 import sqlite3
+import rsa
 
 
 
 class Provider(ORM):
     tablename = 'providers'
     fields = ['hospital', 'doctor_name', 'department', 'username',
-                'email', 'password_hash', 'token', 'api_key', 'unic_id', 'temp_token']
+                'email', 'password_hash', 'token', 'api_key', 'unic_id', 'temp_token'
+                'pub_key', 'pri_key']
 
     def __init__(self, **kwargs):
         self.pk = kwargs.get('pk')
@@ -22,6 +24,8 @@ class Provider(ORM):
         self.api_key = kwargs.get('api_key')
         self.temp_token = kwargs.get('temp_token')
         self.unic_id = kwargs.get('unic_id')
+        self.pub_key= kwargs.get('pub_key')
+        self.pri_key= kwargs.get('pri_key')
     
     @classmethod
     def api_authenticate(cls, api_key):
@@ -45,28 +49,31 @@ class Provider(ORM):
     def write_token_to_chain(self, user_id, provider_id):
         user = User.one_from_where_clause('WHERE unic_id=?', (user_id,))
         provider = Provider.one_from_where_clause('WHERE unic_id=?', (provider_id,))
-        print(provider)
         if user and provider:
-            # TODO: generate single-use token here -- DONE
+            # generates single-use token here 
             user.temp_token = util.temp_token()
             user.save()
             temp_token = user.temp_token
-            # TODO: encrypt token w/ providers public key
-            with sqlite3.connect('flaskchain.db') as conn:
-                cur = conn.cursor()
-                SQL = "INSERT INTO chain (user_token, provider_id) VALUES(?,?)"
-                cur.execute(SQL, (temp_token, provider_id))
+            # encrypt token w/ providers public key
+            encrypted = rsa.encrypt(temp_token.encode("utf8"), rsa.key.PublicKey.load_pkcs1(self.pub_key))
+            return encrypted
         else:
-            "Patient and/or Provider don't exist"
+            return None
             
 
-    def get_user_token(self, unic_id):
+    def get_user_token(self, encrytped):
+        # get transaction id, make request with id, gettin key back, decrypt with private key
+        # token = 
+        # decrypting token
+        decrypted = rsa.decrypt(encrypted, rsa.key.PrivatecKey.load_pkcs1(self.pri_key))
+
         with sqlite3.connect('flaskchain.db') as conn:
             cur = conn.cursor()
             SQL = "SELECT user_token FROM chain WHERE provider_id=?"
             cur.execute(SQL, (unic_id,))
             token = cur.fetchone()
             # TODO: decrypt token
+
             return token[0]
 
      # TODO

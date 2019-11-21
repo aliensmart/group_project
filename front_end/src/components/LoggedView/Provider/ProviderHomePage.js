@@ -65,7 +65,7 @@ const UserHomePage = ()=>{
     const fetchData = async ()=>{
         setIsLoading(true);
         try{
-            const res = await axios(`http://localhost:5001/${token}/get_token`)
+            const res = await axios(`http://localhost:5000/${token}/get_token`)
             setData(res.data.Patient_Token);
             console.log(data)
         }catch (error){

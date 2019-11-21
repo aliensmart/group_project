@@ -56,7 +56,9 @@ def schema(dbpath=DBPATH):
             temp_token VARCHAR,
             password_hash VARCHAR(128),
             token VARCHAR,
-            api_key VARCHAR
+            api_key VARCHAR,
+            pub_key BLOB,
+            pri_key BLOB
             ); """
 
         cur.execute(SQL)

@@ -4,6 +4,7 @@ from users import User
 from providers import Provider
 from user_files import User_files
 import util
+import rsa
 
 app = Flask(__name__)
 CORS(app)
@@ -42,6 +43,9 @@ def create_provider_account():
     provider.doctor_name = data['doctor_name']
     provider.email = data['email']
     provider.unic_id = unic_id
+    pub, pri = rsa.newkeys(512)
+    provider.pub_key = pub.save_pkcs1(format="PEM")
+    provider.pri_key = pri.save_pkcs1(format="PEM")
     provider.save()
     return jsonify({"api_key": provider.api_key})
 
@@ -130,6 +134,27 @@ def get_user_files(api_key):
     else:
         return jsonify({"info": "none"})
 
+@app.route('/<api_key>/send_token', methods=['POST'])
+def token_to_chain(api_key):
+    data = request.get_json()
+    provider_id = data['provider_id']
+    user_id = data['user_id']
+    provider = Provider.api_authenticate(api_key)
+    encrypted = provider.write_token_to_chain(user_id, provider_id)
+    # next line will write to chian using a flask route
+    # data = requests.get(IPADDRESS/ROUTE/SOMETHING THAT RETURNS TXID)
+    return jsonify({"encrypted" :encrypted})
+
+@app.route('/<api_key>/get_token', methods=['GET'])
+def provider_recieves_token(api_key):
+    data = requests.get_json()
+    tx_id= = data['txid']
+    provider = Provider.api_authenticate(api_key)
+    token = provider.get_user_token(tx_id)
+    
+
+    return jsonify({"Patient_Token" : token})
+ 
 
 if __name__ == "__main__":
     app.run(debug=True)

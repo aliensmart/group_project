@@ -22,7 +22,7 @@ def random_unic_id(length=8):
     output = hasher.hexdigest()
     return output[:length]
 
-def temp_token(length=64):
+def temp_token(length=50):
     seed = (str(random.random()) + str(random.random())).encode()
     hasher = sha512()
     hasher.update(seed)
